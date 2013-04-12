@@ -20,13 +20,19 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>First Name</td>
-                                <th>Surname</td>
-                                <th>Date of Birth</td>
-                                <th>Salary</td>
+                                <th>First Name</th>
+                                <th>Surname</th>
+                                <th>Date of Birth</th>
+                                <th>Salary</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td>First Name</td>
+                                <td>Surname</td>
+                                <td>Date of Birth</td>
+                                <td>Salary</td>
+                            </tr>
                             <tr>
                                 <td>First Name</td>
                                 <td>Surname</td>
