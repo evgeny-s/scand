@@ -59,3 +59,7 @@
 [Thu Apr 11 09:21:03 2013] [error] [client 127.0.0.1] Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace.
 [Thu Apr 11 09:21:03 2013] [error] [client 127.0.0.1] Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace.
 [Thu Apr 11 09:21:04 2013] [error] [client 127.0.0.1] Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace.
+[Sun Apr 14 02:58:19 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 02:58:19 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 03:25:06 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 03:25:06 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico

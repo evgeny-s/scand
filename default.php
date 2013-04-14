@@ -1,132 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Cache-Control" content="no-cache">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="Lang" content="en">
-<meta name="author" content="">
-<meta name="description" content="">
-<meta name="keywords" content="">
-<title>User's Salary list</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-    <body>
-        <div class="main-width">
-            <h1>User's Salary list</h1>  
-            <div class="content">
-                <label for="use_ajax">Use AJAX</label>
-                <input type="checkbox" name="use_ajax" id="use_ajax" />
-                <div class="table-wrapper">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>First Name</td>
-                                <th>Surname</td>
-                                <th>Date of Birth</td>
-                                <th>Salary</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                            <tr>
-                                <td>First Name</td>
-                                <td>Surname</td>
-                                <td>Date of Birth</td>
-                                <td>Salary</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+<?php
+include('/others/config.php');
+require_once('/classes/mysql_layer.class.php');
+
+
+if ($_POST) {
+    print_r($_POST);die();
+}
+if (isset($_POST['ajax']) && $_POST['ajax']) {
+
+    $DB = new Mysql_layer(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+} else {
+    include('/templates/main.html');
+}
