@@ -103,7 +103,7 @@ form#remove_form {
 
 .popup_form {
     background: none repeat scroll 0 0 white;
-    height: 200px;
+    height: 220px;
     left: 40%;
     position: fixed;
     top: 35%;
@@ -134,6 +134,10 @@ form#remove_form {
     height: 19px;
     padding: 10px;
     text-align: center;
+}
+
+.popup_body {
+    margin: 15px;
 }
 
 .btn-group {

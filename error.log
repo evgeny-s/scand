@@ -63,3 +63,22 @@
 [Sun Apr 14 02:58:19 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
 [Sun Apr 14 03:25:06 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
 [Sun Apr 14 03:25:06 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 13:11:44 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 13:12:03 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Sun Apr 14 22:20:30 2013] [error] [client 127.0.0.1] PHP Fatal error:  Class 'actions' not found in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 10, referer: http://scand.bi/
+[Sun Apr 14 22:21:04 2013] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Actions' not found in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 10, referer: http://scand.bi/
+[Sun Apr 14 22:21:36 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: action in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 12, referer: http://scand.bi/
+[Sun Apr 14 22:22:30 2013] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function mysq_error() in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 28, referer: http://scand.bi/
+[Sun Apr 14 22:22:44 2013] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function mysq_error() in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 28, referer: http://scand.bi/
+[Sun Apr 14 22:22:49 2013] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined function mysq_error() in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 28, referer: http://scand.bi/
+[Sun Apr 14 22:31:02 2013] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method Mysql_layer::select() in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 17, referer: http://scand.bi/
+[Sun Apr 14 22:34:21 2013] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method Mysql_layer::select() in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 17, referer: http://scand.bi/
+[Mon Apr 15 00:38:26 2013] [error] [client 127.0.0.1] PHP Warning:  mysql_free_result() expects parameter 1 to be resource, boolean given in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 51, referer: http://scand.bi/
+[Mon Apr 15 01:15:49 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 11, referer: http://scand.bi/default.php
+[Mon Apr 15 01:15:49 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 11, referer: http://scand.bi/default.php
+[Mon Apr 15 01:15:58 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 11, referer: http://scand.bi/default.php
+[Mon Apr 15 01:15:58 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 11, referer: http://scand.bi/default.php
+[Mon Apr 15 01:17:20 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 11, referer: http://scand.bi/default.php
+[Mon Apr 15 01:18:22 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: action in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 10, referer: http://scand.bi/default.php
+[Mon Apr 15 01:19:09 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: insert_id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 41, referer: http://scand.bi/default.php
+[Mon Apr 15 01:21:21 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: ajax_request in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 28, referer: http://scand.bi/default.php
