@@ -99,6 +99,7 @@ form#remove_form {
     position: fixed;
     width: 100%;
     z-index: 50;
+    display: none;
 }
 
 .popup_form {
@@ -110,6 +111,17 @@ form#remove_form {
     width: 300px;
     z-index: 55;
     border: 1px solid;
+    display: none;
+}
+
+.popup_header_text {
+    display: inline;
+    width: 85%;
+}
+
+.popup_header_close {
+    float: right;
+    width: 10%;
 }
 
 .popup_form input[type="text"] {

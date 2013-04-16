@@ -33,11 +33,28 @@ var tid = setInterval( function () {
     /*binding key pressed*/
     bind('keypress', document, upAndDownOnPushKeys);
 
-    var remove_button = document.getElementById('remove_button');
+    var remove_button = bId('remove_button');
     bind('click', remove_button, removeRow);
 
-    var add_button = document.getElementById('add_button');
+    var add_button = bId('add_button');
     bind('click', add_button, addRow);
+
+    var close_button = bId('close');
+    bind('click', close_button, modal);
+
+    var cancel_button = bId('cancel_button');
+    bind('click', cancel_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'close');
+    });
+
+    var ok_button = bId('ok_button');
+    bind('click', ok_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'submit');
+    });
 
     /*assign action to event for all browser*/
     var wrapper = document.getElementById('table-wrapper');
@@ -242,5 +259,60 @@ function removeRow() {
  */
 function addRow() {
 
+}
+
+function modal(data, action) {
+    if (!action) {
+        action = 'close';
+    }
+    var modal = bId('modal');
+    var popup = bId('popup');
+    var first_name_field = bId('first_name');
+    var surname = bId('first_name');
+    var date_of_birth = bId('first_name');
+    var salary = bId('first_name');
+    var id = bId('id');
+    switch(action) {
+        case 'show':
+            modal.style.display = 'block';
+            popup.style.display = 'block';
+            if (data['id']) {
+                first_name_field.setAttribute('value', data['first_name_field']);
+                surname.setAttribute('value', data['surname']);
+                date_of_birth.setAttribute('value', data['date_of_birth']);
+                salary.setAttribute('value', data['salary']);
+                id.setAttribute('value', data['id']);
+            }
+            break;
+        case 'close':
+            modal.style.display = 'none';
+            popup.style.display = 'none';
+            break;
+        case 'submit':
+
+            break;
+    }
+    if (data['id']) {
+        var first_name_field = bId('first_name');
+        first_name_field.setAttribute('value', data['first_name_field']);
+        var surname = bId('first_name');
+        surname.setAttribute('value', data['surname']);
+        var date_of_birth = bId('first_name');
+        date_of_birth.setAttribute('value', data['date_of_birth']);
+        var salary = bId('first_name');
+        salary.setAttribute('value', data['salary']);
+        var id = bId('id');
+        id.setAttribute('value', data['id']);
+    }
+}
+
+/*
+ * @function bId
+ * getting element by id
+ *
+ */
+function bId(data) {
+    var element = document.getElementById(data);
+    return element;
 }
 

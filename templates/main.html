@@ -12,8 +12,11 @@
     <script src="/scripts/main.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="popup_form">
-    <div class="popup_heaher">Form for add/edit</div>
+<div class="popup_form" id="modal">
+    <div class="popup_heaher">
+        <div class="popup_header_text">Form for add/edit</div>
+        <div class="popup_header_close"><a href="javascript:void(0)" id="close"><img src="../images/icon_close.png"></a></div>
+    </div>
     <div class="popup_body">
         <form method="post" action="default.php">
             <label for="first_name">First Name</label>
@@ -24,6 +27,7 @@
             <input type="text" id="date_of_birth" />
             <label for="salary">Salary</label>
             <input type="text" id="salary" />
+            <input type="hidden" id="id" />
             <div class="btn-group">
                 <button class="btn" id="ok_button">OK</button>
                 <button class="btn" id="cancel_button">Cancel</button>
@@ -31,7 +35,7 @@
         </form>
     </div>
 </div>
-<div class="popup"></div>
+<div class="popup" id="popup"></div>
 <div class="main-width">
     <h1>User's Salary list</h1>
     <div class="content">
