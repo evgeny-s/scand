@@ -37,7 +37,17 @@ var tid = setInterval( function () {
     bind('click', remove_button, removeRow);
 
     var add_button = bId('add_button');
-    bind('click', add_button, addRow);
+    bind('click', add_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'show');
+    });
+
+    var edit_button = bId('edit_button');
+    bind('click', edit_button, showEditForm);
+
+    //editing on double click
+    bind('dblclick', '', showEditForm);
 
     var close_button = bId('close');
     bind('click', close_button, modal);
@@ -199,7 +209,6 @@ function removeRow() {
     var prev_sibling = sel_tr[0].previousSibling;
 
     var id = sel_tr[0].getAttribute('number');
-    var use_ajax = document.getElementById('use_ajax');
     if (confirm('Are you sure?')) {
         if (use_ajax.checked) {
             var data = {};
@@ -268,33 +277,127 @@ function modal(data, action) {
     var modal = bId('modal');
     var popup = bId('popup');
     var first_name_field = bId('first_name');
-    var surname = bId('first_name');
-    var date_of_birth = bId('first_name');
-    var salary = bId('first_name');
-    var id = bId('id');
+    var surname_field = bId('surname');
+    var date_of_birth_field = bId('date_of_birth');
+    var salary_field = bId('salary');
+    var id_field = bId('id');
     switch(action) {
         case 'show':
+            if (data['id']) {
+                first_name_field.setAttribute('value', data['first_name']);
+                surname_field.setAttribute('value', data['surname']);
+                date_of_birth_field.setAttribute('value', data['date_of_birth']);
+                salary_field.setAttribute('value', data['salary']);
+                id_field.setAttribute('value', data['id']);
+            } else {
+                first_name_field.setAttribute('value', '');
+                surname_field.setAttribute('value', '');
+                date_of_birth_field.setAttribute('value', '');
+                salary_field.setAttribute('value', '');
+            }
             modal.style.display = 'block';
             popup.style.display = 'block';
-            if (data['id']) {
-                first_name_field.setAttribute('value', data['first_name_field']);
-                surname.setAttribute('value', data['surname']);
-                date_of_birth.setAttribute('value', data['date_of_birth']);
-                salary.setAttribute('value', data['salary']);
-                id.setAttribute('value', data['id']);
-            }
             break;
+        case 'submit':
+            var use_ajax = document.getElementById('use_ajax');
+            if (validate()) {
+                if (use_ajax) {
+                    data['action'] = 'submit';
+                    MakeRequest(data, function(callback) {
+                        if (callback.result) {
+                            if (callback.id) {
+                                var selected_row = document.getElementsByClassName('selected');
+                                var tds = selected_row.childNodes();
+                                tds[0].innerHTML = callback.first_name;
+                                tds[1].innerHTML = callback.surname;
+                                tds[2].innerHTML = callback.date_of_birth;
+                                tds[3].innerHTML = callback.salary;
+                            } else {
+                                var table = bId('salaryTable');
+                                var tr = document.createElement('TR');
+                                table.appendChild(tr);
+                                var td1 = document.createElement('TD');
+                                td1.innerHTML = callback.first_name;
+                                var td2 = document.createElement('TD');
+                                td2.innerHTML = callback.surname;
+                                var td3 = document.createElement('TD');
+                                td3.innerHTML = callback.date_of_birth;
+                                var td4 = document.createElement('TD');
+                                td4.innerHTML = callback.salary;
+                                tr.appendChild(td1);
+                                tr.appendChild(td2);
+                                tr.appendChild(td3);
+                                tr.appendChild(td4);
+                            }
+                        } else {
+                            alert('Some problems occurred. Please, try again later.');
+                        }
+                    });
+                } else {
+                    var form = document.createElement("form");
+                    form.setAttribute('method',"post");
+                    form.setAttribute('action',"default.php");
+                    form.setAttribute('id',"submit_form");
+
+                    var i1 = document.createElement("input");
+                    i1.setAttribute('type',"text");
+                    i1.setAttribute('name',"action");
+                    i1.setAttribute('value',"submit");
+                    form.appendChild(i1);
+
+                    var i2 = document.createElement("input");
+                    i2.setAttribute('type',"text");
+                    i2.setAttribute('name',"first_name");
+                    i2.setAttribute('value',data['first_name']);
+                    form.appendChild(i2);
+
+                    var i3 = document.createElement("input");
+                    i2.setAttribute('type',"text");
+                    i2.setAttribute('name',"surname");
+                    i2.setAttribute('value',data['surname']);
+                    form.appendChild(i3);
+
+                    var i4 = document.createElement("input");
+                    i2.setAttribute('type',"text");
+                    i2.setAttribute('name',"date_of_birth");
+                    i2.setAttribute('value',data['date_of_birth']);
+                    form.appendChild(i4);
+
+                    var i5 = document.createElement("input");
+                    i2.setAttribute('type',"text");
+                    i2.setAttribute('name',"salary");
+                    i2.setAttribute('value',data['salary']);
+                    form.appendChild(i5);
+
+                    if (data['id']) {
+                        var i6 = document.createElement("input");
+                        i6.setAttribute('type',"text");
+                        i6.setAttribute('name',"id");
+                        i6.setAttribute('value',data['id']);
+                        form.appendChild(i6);
+                    }
+
+                    var submit = document.createElement("input"); //input element, Submit button
+                    submit.setAttribute('type',"submit");
+                    submit.setAttribute('value',"Submit");
+
+                    form.appendChild(submit);
+
+                    document.getElementsByTagName('body')[0].appendChild(form);
+
+                    form.submit();
+                }
+            } else {
+                alert('Please, check input data!');
+            }
         case 'close':
             modal.style.display = 'none';
             popup.style.display = 'none';
             break;
-        case 'submit':
-
-            break;
     }
     if (data['id']) {
         var first_name_field = bId('first_name');
-        first_name_field.setAttribute('value', data['first_name_field']);
+        first_name_field.setAttribute('value', data['first_name']);
         var surname = bId('first_name');
         surname.setAttribute('value', data['surname']);
         var date_of_birth = bId('first_name');
@@ -303,6 +406,8 @@ function modal(data, action) {
         salary.setAttribute('value', data['salary']);
         var id = bId('id');
         id.setAttribute('value', data['id']);
+    } else {
+
     }
 }
 
@@ -314,5 +419,30 @@ function modal(data, action) {
 function bId(data) {
     var element = document.getElementById(data);
     return element;
+}
+
+/*
+ * @function validate
+ * validation input data before server send
+ *
+ */
+function validate() {
+
+    return;
+}
+
+showEditForm = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    data = {};
+    var selected_row = document.getElementsByClassName('selected');
+    var tds = selected_row[0].childNodes;
+    data.id = selected_row[0].getAttribute('number');
+    data.first_name = tds[0].innerHTML;
+    data.surname = tds[1].innerHTML;
+    data.date_of_birth = tds[2].innerHTML;
+    data.salary = tds[3].innerHTML;
+    modal(data,'show');
+
 }
 

@@ -12,7 +12,10 @@ if ((is_array($ajax) && $ajax) || (is_array($_POST) && $_POST)) {
     $action = new Actions();
     $input['action'] = isset($ajax['action']) && $ajax['action'] ? $ajax['action'] : $_POST['action'];
     $input['id'] = isset($ajax['id']) && $ajax['id'] ? $ajax['id'] : (isset($_POST['id']) && $_POST['id'] ? $_POST['id'] : '');
-
+    $input['first_name'] = isset($ajax['first_name']) && $ajax['first_name'] ? $ajax['first_name'] : (isset($_POST['first_name']) && $_POST['first_name'] ? $_POST['first_name'] : '');
+    $input['surname'] = isset($ajax['surname']) && $ajax['surname'] ? $ajax['surname'] : (isset($_POST['surname']) && $_POST['surname'] ? $_POST['surname'] : '');
+    $input['date_of_birth'] = isset($ajax['date_of_birth']) && $ajax['date_of_birth'] ? $ajax['date_of_birth'] : (isset($_POST['date_of_birth']) && $_POST['date_of_birth'] ? $_POST['date_of_birth'] : '');
+    $input['salary'] = isset($ajax['salary']) && $ajax['salary'] ? $ajax['salary'] : (isset($_POST['salary']) && $_POST['salary'] ? $_POST['salary'] : '');
     switch ($input['action']) {
         case 'index':
             $result = $action->index();
@@ -20,9 +23,12 @@ if ((is_array($ajax) && $ajax) || (is_array($_POST) && $_POST)) {
         case 'remove':
             $result = $action->remove($input['id']);
             break;
-        case 'add':
-            break;
-        case 'edit':
+        case 'submit':
+            if ($input['id']) {
+                $result = $action->edit($input);
+            } else {
+                $result = $action->add($input);
+            }
             break;
     }
     if ($ajax_request) {

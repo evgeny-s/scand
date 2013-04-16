@@ -16,7 +16,20 @@ class Actions {
     }
 
     public function edit($data = array()) {
-
+        global $DB;
+        $data = Common::clean($data);
+        if ($data) {
+            $query = "UPDATE `employers` SET first_name={$data['first_name']}, surname={$data['surname']}, date_of_birth={$data['date_of_birth']}, salary={$data['salary']} WHERE id={$data['id']}";
+            $result = $DB->query($query);
+            if ($result) {
+                $data['result'] = true;
+                return $data;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function remove($id) {

@@ -1,7 +1,7 @@
 <?php
 class Common {
 
-    function xss_clean($data)
+    private function xss_clean($data)
     {
         $data = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $data);
         $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
@@ -27,5 +27,21 @@ class Common {
         while ($old_data !== $data);
 
         return $data;
+    }
+
+    function clean($data = array()) {
+        if ($data) {
+            foreach($data as $k => $value) {
+                $cleaned = $this->xss_clean($value);
+                if ($cleaned) {
+                    $data_cleaned[$k] = $cleaned;
+                } else {
+                    return false;
+                }
+            }
+            return $data_cleaned;
+        } else {
+            return false;
+        }
     }
 }
