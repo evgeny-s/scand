@@ -103,7 +103,7 @@ form#remove_form {
 
 .popup_form {
     background: none repeat scroll 0 0 white;
-    height: 220px;
+    height: 270px;
     left: 40%;
     position: fixed;
     top: 35%;
@@ -114,18 +114,20 @@ form#remove_form {
 
 .popup_form input[type="text"] {
     display: block;
-    margin: auto;
+    margin: 10px auto;
     padding: 5px;
 }
 
 .popup_form label {
     float: left;
     padding: 5px 0 0 10px;
+    width: 100px;
 }
 
 .popup_form input[type="button"] {
     height: 39px;
     width: 70px;
+    float: right;
 }
 
 .popup_heaher {
