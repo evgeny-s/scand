@@ -173,9 +173,10 @@ function selectOnClick() {
  */
 function upAndDownOnPushKeys(e) {
     e = e || window.event;
-    e.preventDefault();
     /*up*/
     if (e.keyCode == '38') {
+        e.preventDefault();
+        e.stopPropagation();
         var sel_tr = document.getElementsByClassName('selected');
         var prev_sibling = sel_tr[0].previousSibling;
         if (prev_sibling && prev_sibling.nodeName == 'TR') {
@@ -187,6 +188,8 @@ function upAndDownOnPushKeys(e) {
     } else
     /*down*/
     if (e.keyCode == '40') {
+        e.preventDefault();
+        e.stopPropagation();
         var sel_tr = document.getElementsByClassName('selected');
         var next_sibling = sel_tr[0].nextSibling;
         if (next_sibling && next_sibling.nodeName == 'TR') {
@@ -195,6 +198,8 @@ function upAndDownOnPushKeys(e) {
         } else {
             return false;
         }
+    } else {
+
     }
 }
 
