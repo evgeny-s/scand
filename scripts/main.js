@@ -48,28 +48,25 @@ var tid = setInterval( function () {
         modal([],'submit');
     });
 
-    /*assign action to event for all browser*/
-    var wrapper = document.getElementById('table-wrapper');
-    if (wrapper.addEventListener) {
-        wrapper.addEventListener('scroll', loadData, false);
-    } else if (wrapper.attachEvent)  {
-        wrapper.attachEvent('onscroll', loadData);
-    }
+
+    var wrapper = bId('table-wrapper');
+    bind('scroll', wrapper, loadData);
 }, 100 );
 /*onload block end*/
 
 function loadData() {
     var obj = this;
     if (obj.scrollTop + obj.offsetHeight >= obj.scrollHeight) {
-        //alert('add data to bottom and delete from top');
+        /*add data to bottom and delete from top*/
     } else {
         if (obj.scrollTop == 0) {
-            //alert('add data to top and delete from bottom');
+            /*add data to top and delete from bottom*/
         }
     }
 
 }
 
+/*assign actions to event for all browser*/
 function bind(action, element, func) {
     if (element.addEventListener) {
         element.addEventListener(action, func, false);
@@ -279,7 +276,7 @@ function modal(data, action) {
             return false;
             break;
         case 'submit':
-            var use_ajax = document.getElementById('use_ajax');
+            var use_ajax = bId('use_ajax');
             if (validate()) {
                 if (use_ajax.checked) {
                     data = {};
@@ -430,7 +427,7 @@ showEditForm = function(e) {
 
 function sort(field) {
     if (field) {
-        var use_ajax = document.getElementById('use_ajax');
+        var use_ajax = bId('use_ajax');
         if (use_ajax.checked) {
             data = {};
             data['action'] = 'sort';
@@ -473,7 +470,7 @@ function sort(field) {
 }
 
 function buildTable(callback) {
-    var table = document.getElementById('salaryTable');
+    var table = bId('salaryTable');
     while (table.firstChild) {
         table.removeChild(table.firstChild);
     }
