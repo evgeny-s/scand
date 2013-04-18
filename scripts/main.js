@@ -451,6 +451,7 @@ function sort(field) {
             MakeRequest(data, function(callback) {
                 buildTable(callback);
             });
+            getSortInfo();
         } else {
             var form = document.createElement("form");
             form.setAttribute('method',"post");
