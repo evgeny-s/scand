@@ -1,3 +1,4 @@
+/*onload block begin*/
 var tid = setInterval( function () {
     if ( document.readyState !== 'complete' ) return;
     clearInterval( tid );
@@ -54,9 +55,8 @@ var tid = setInterval( function () {
     } else if (wrapper.attachEvent)  {
         wrapper.attachEvent('onscroll', loadData);
     }
-
-
 }, 100 );
+/*onload block end*/
 
 function loadData() {
     var obj = this;
@@ -241,7 +241,6 @@ function removeRow() {
             form.appendChild(submit);
 
             document.getElementsByTagName('body')[0].appendChild(form);
-
             form.submit();
         }
     }
@@ -262,6 +261,8 @@ function modal(data, action) {
     switch(action) {
         case 'show':
             if (data['id']) {
+                data['date_of_birth'] = convertDate(data['date_of_birth']);
+                data['salary'] = parseInt(data['salary']);
                 first_name_field.setAttribute('value', data['first_name']);
                 surname_field.setAttribute('value', data['surname']);
                 date_of_birth_field.setAttribute('value', data['date_of_birth']);
@@ -290,13 +291,14 @@ function modal(data, action) {
                     data['id'] = id_field.value;
                     MakeRequest(data, function(callback) {
                         if (callback.result) {
+                            callback.date_of_birth = reverseConvertDate(callback.date_of_birth);
                             if (callback.id) {
                                 var selected_row = document.getElementsByClassName('selected');
                                 var tds = selected_row[0].childNodes;
                                 tds[0].innerHTML = callback.first_name;
                                 tds[1].innerHTML = callback.surname;
                                 tds[2].innerHTML = callback.date_of_birth;
-                                tds[3].innerHTML = callback.salary;
+                                tds[3].innerHTML = callback.salary + " RUB";
                             } else {
                                 var table = bId('salaryTable');
                                 var tr = document.createElement('TR');
@@ -308,7 +310,7 @@ function modal(data, action) {
                                 var td3 = document.createElement('TD');
                                 td3.innerHTML = callback.date_of_birth;
                                 var td4 = document.createElement('TD');
-                                td4.innerHTML = callback.salary;
+                                td4.innerHTML = callback.salary + " RUB";
                                 tr.appendChild(td1);
                                 tr.appendChild(td2);
                                 tr.appendChild(td3);
@@ -381,20 +383,6 @@ function modal(data, action) {
             popup.style.display = 'none';
             break;
     }
-    if (data['id']) {
-        var first_name_field = bId('first_name');
-        first_name_field.setAttribute('value', data['first_name']);
-        var surname = bId('first_name');
-        surname.setAttribute('value', data['surname']);
-        var date_of_birth = bId('first_name');
-        date_of_birth.setAttribute('value', data['date_of_birth']);
-        var salary = bId('first_name');
-        salary.setAttribute('value', data['salary']);
-        var id = bId('id');
-        id.setAttribute('value', data['id']);
-    } else {
-
-    }
 }
 
 /*
@@ -438,7 +426,6 @@ showEditForm = function(e) {
     data['date_of_birth'] = tds[2].innerHTML;
     data['salary'] = tds[3].innerHTML;
     modal(data,'show');
-
 }
 
 function sort(field) {
@@ -504,7 +491,7 @@ function buildTable(callback) {
         td1.innerHTML = callback[i]['first_name'];
         td2.innerHTML = callback[i]['surname'];
         td3.innerHTML = callback[i]['date_of_birth'];
-        td4.innerHTML = callback[i]['salary'];
+        td4.innerHTML = callback[i]['salary'] + ' RUB';
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
@@ -521,17 +508,56 @@ function getSortInfo() {
         var ths = document.getElementsByTagName('TH');
         for (i in ths) {
             for (j in ths[i].attributes) {
-                console.log(ths[i].attributes[j].nodeValue);
-                if (ths[i].attributes[j].nodeValue == callback.field && callback.field && ths[i].attributes[j].nodeType == '2') {
+                if (!ths[i].attributes[j].nodeValue) {
+                    continue;
+                }
+                if (ths[i].attributes[j].nodeValue == callback.field && callback.field && ths[i].attributes[j].nodeType == '2' && ths[i].attributes[j].nodeValue) {
                  ths[i].setAttribute('current', '1');
-                 ths[i].setAttribute('direction', callback.type);
+                 ths[i].setAttribute('class', callback.type);
                     break;
                  } else {
                  ths[i].setAttribute('current', '');
-                 ths[i].setAttribute('direction', '');
+                 ths[i].setAttribute('class', '');
                  }
             }
         }
     });
 }
 
+function convertDate(data) {
+    convertTable = {};
+    convertTable['Jan'] = '01';
+    convertTable['Feb'] = '02';
+    convertTable['Mar'] = '03';
+    convertTable['Apr'] = '04';
+    convertTable['May'] = '05';
+    convertTable['June'] = '06';
+    convertTable['July'] = '07';
+    convertTable['Aug'] = '08';
+    convertTable['Sept'] = '09';
+    convertTable['Oct'] = '10';
+    convertTable['Nov'] = '11';
+    convertTable['Dec'] = '12';
+    parts = data.split(' ');
+    result = parts[0] + "." + convertTable[parts[1]] + "." + parts[2];
+    return result;
+}
+
+function reverseConvertDate(data) {
+    convertTable = {};
+    convertTable['01'] = 'Jan';
+    convertTable['02'] = 'Feb';
+    convertTable['03'] = 'Mar';
+    convertTable['04'] = 'Apr';
+    convertTable['05'] = 'May';
+    convertTable['06'] = 'June';
+    convertTable['07'] = 'July';
+    convertTable['08'] = 'Aug';
+    convertTable['09'] = 'Sept';
+    convertTable['10'] = 'Oct';
+    convertTable['11'] = 'Nov';
+    convertTable['12'] = 'Dec';
+    parts = data.split('.');
+    result = parts[0] + " " + convertTable[parts[1]] + " " + parts[2];
+    return result;
+}

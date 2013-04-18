@@ -18,6 +18,7 @@ if ((is_array($ajax) && $ajax) || (is_array($_POST) && $_POST)) {
     $input['date_of_birth'] = isset($ajax['date_of_birth']) && $ajax['date_of_birth'] ? $ajax['date_of_birth'] : (isset($_POST['date_of_birth']) && $_POST['date_of_birth'] ? $_POST['date_of_birth'] : '');
     $input['salary'] = isset($ajax['salary']) && $ajax['salary'] ? $ajax['salary'] : (isset($_POST['salary']) && $_POST['salary'] ? $_POST['salary'] : '');
     $input['field'] = isset($ajax['field']) && $ajax['field'] ? $ajax['field'] : (isset($_POST['field']) && $_POST['field'] ? $_POST['field'] : '');
+    /*routing begin*/
     switch ($input['action']) {
         case 'index':
             $result = $action->index();
@@ -39,6 +40,7 @@ if ((is_array($ajax) && $ajax) || (is_array($_POST) && $_POST)) {
             $result = array('field' => $_SESSION['sort_field'],'type' => $_SESSION['sort_type']);
             break;
     }
+    /*routing end*/
     if ($ajax_request) {
         echo json_encode($result);
     } else {

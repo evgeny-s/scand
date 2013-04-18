@@ -9,7 +9,7 @@ class Actions {
         }
         $data['field'] = $_SESSION['sort_field'];
         $data['type'] = $_SESSION['sort_type'];
-        $query = "SELECT id, first_name, surname, DATE_FORMAT(date_of_birth, '%d.%m.%Y') as date_of_birth, salary FROM `employers` ORDER BY `employers`.{$data['field']} {$data['type']}";
+        $query = "SELECT id, first_name, surname, DATE_FORMAT(date_of_birth, '%d %b %Y') as date_of_birth, salary FROM `employers` ORDER BY `employers`.{$data['field']} {$data['type']}";
         $result = $DB->query($query);
         return $result;
     }
@@ -52,7 +52,7 @@ class Actions {
         global $DB;
         $data = Common::clean($data);
         if ($data) {
-            $query = "UPDATE `employers` SET first_name='{$data['first_name']}', surname='{$data['surname']}', date_of_birth='{$data['date_of_birth']}', salary={$data['salary']} WHERE id={$data['id']}";
+            $query = "UPDATE `employers` SET first_name='{$data['first_name']}', surname='{$data['surname']}', date_of_birth=STR_TO_DATE('{$data['date_of_birth']}', '%d.%m.%Y'), salary={$data['salary']} WHERE id={$data['id']}";
             $result = $DB->query($query);
             if ($result) {
                 $data['result'] = true;

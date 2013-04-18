@@ -33,20 +33,23 @@ h1 {
     width: 98%;
 }
 
-th[direction="ASC"] img {
-    background: url("../images/icon_arrow_up.png") repeat scroll 0 0 transparent;
+th.ASC img {
+    background: url("../images/icon_arrow_up.png") no-repeat scroll 0 0 transparent;
     display: block;
     height: 32px;
-    position: absolute;
+    float: right;;
     top: 7px;
     width: 32px;
 }
 
-th[direction="DESC"] img {
-    background: url("../images/icon_arrow_down.png") repeat scroll 0 0 transparent;
+img {
+    display: none;
+}
+th.DESC img {
+    background: url("../images/icon_arrow_down.png") no-repeat scroll 0 0 transparent;
     display: block;
     height: 32px;
-    position: absolute;
+    float: right;;
     top: 7px;
     width: 32px;
 }

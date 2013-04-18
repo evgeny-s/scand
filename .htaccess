@@ -1,4 +1,4 @@
 AddType text/x-component .htc
 RewriteEngine on
-RewriteCond  %{REQUEST_FILENAME} !\.(ico|jpg|jpeg|gif|png|css|js|html|xml|JPG|JPEG|GIF|PNG|txt)$
+RewriteCond  %{REQUEST_FILENAME} !\.(jpg|jpeg|png|css|js|html|PNG)$
 RewriteRule  ^(.*)$ default.php
