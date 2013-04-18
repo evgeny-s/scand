@@ -82,3 +82,14 @@
 [Mon Apr 15 01:18:22 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined index: action in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 10, referer: http://scand.bi/default.php
 [Mon Apr 15 01:19:09 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: insert_id in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\classes\\mysql_layer.class.php on line 41, referer: http://scand.bi/default.php
 [Mon Apr 15 01:21:21 2013] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: ajax_request in D:\\ZendServer\\Apache2\\htdocs\\scand.bi\\default.php on line 28, referer: http://scand.bi/default.php
+[Tue Apr 16 20:34:44 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/close_icon.png, referer: http://scand.bi/default.php
+[Tue Apr 16 20:34:47 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/close_icon.png
+[Tue Apr 16 20:35:01 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/icon.png, referer: http://scand.bi/default.php
+[Tue Apr 16 20:35:02 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/icon_clo.png, referer: http://scand.bi/default.php
+[Tue Apr 16 20:42:04 2013] [error] [client 127.0.0.1] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /: HTTP/1.1 to file, referer: http://scand.bi/default.php
+[Tue Apr 16 20:42:18 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/close_icon.png, referer: http://scand.bi/default.php
+[Thu Apr 18 03:41:16 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Thu Apr 18 03:41:16 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/favicon.ico
+[Thu Apr 18 08:49:15 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/icont_arrow_up.png, referer: http://scand.bi/default.php
+[Thu Apr 18 08:49:22 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/icont_arrow_up.png
+[Thu Apr 18 08:49:38 2013] [error] [client 127.0.0.1] File does not exist: D:/ZendServer/Apache2/htdocs/scand.bi/images/icont_arrow_up.png

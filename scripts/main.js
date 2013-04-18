@@ -6,38 +6,46 @@ var tid = setInterval( function () {
     data['action'] = 'index';
     /*make ajax request and parsing data to create content of the table*/
     MakeRequest(data, function (callback) {
-        for (i in callback) {
-            var tr = document.createElement('TR');
-            var td1 = document.createElement('TD');
-            var td2 = document.createElement('TD');
-            var td3 = document.createElement('TD');
-            var td4 = document.createElement('TD');
-            if (i == 0) {
-                tr.setAttribute('class', 'selected');
-            }
-            tr.setAttribute('number', callback[i]['id']);
-            td1.innerHTML = callback[i]['first_name'];
-            td2.innerHTML = callback[i]['surname'];
-            td3.innerHTML = callback[i]['date_of_birth'];
-            td4.innerHTML = callback[i]['salary'];
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            tr.appendChild(td4);
-            var table = document.getElementById('salaryTable');
-            table.appendChild(tr);
-            bind('click', tr, selectOnClick);
-        }
+        buildTable(callback);
     });
+
+    getSortInfo();
 
     /*binding key pressed*/
     bind('keypress', document, upAndDownOnPushKeys);
 
-    var remove_button = document.getElementById('remove_button');
+    var remove_button = bId('remove_button');
     bind('click', remove_button, removeRow);
 
-    var add_button = document.getElementById('add_button');
-    bind('click', add_button, addRow);
+    var add_button = bId('add_button');
+    bind('click', add_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'show');
+    });
+
+    var edit_button = bId('edit_button');
+    bind('click', edit_button, showEditForm);
+
+    //editing on double click
+    bind('dblclick', '', showEditForm);
+
+    var close_button = bId('close');
+    bind('click', close_button, modal);
+
+    var cancel_button = bId('cancel_button');
+    bind('click', cancel_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'close');
+    });
+
+    var ok_button = bId('ok_button');
+    bind('click', ok_button, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal([],'submit');
+    });
 
     /*assign action to event for all browser*/
     var wrapper = document.getElementById('table-wrapper');
@@ -146,9 +154,10 @@ function selectOnClick() {
  */
 function upAndDownOnPushKeys(e) {
     e = e || window.event;
-    e.preventDefault();
     /*up*/
     if (e.keyCode == '38') {
+        e.preventDefault();
+        e.stopPropagation();
         var sel_tr = document.getElementsByClassName('selected');
         var prev_sibling = sel_tr[0].previousSibling;
         if (prev_sibling && prev_sibling.nodeName == 'TR') {
@@ -160,6 +169,8 @@ function upAndDownOnPushKeys(e) {
     } else
     /*down*/
     if (e.keyCode == '40') {
+        e.preventDefault();
+        e.stopPropagation();
         var sel_tr = document.getElementsByClassName('selected');
         var next_sibling = sel_tr[0].nextSibling;
         if (next_sibling && next_sibling.nodeName == 'TR') {
@@ -168,6 +179,8 @@ function upAndDownOnPushKeys(e) {
         } else {
             return false;
         }
+    } else {
+
     }
 }
 
@@ -182,7 +195,6 @@ function removeRow() {
     var prev_sibling = sel_tr[0].previousSibling;
 
     var id = sel_tr[0].getAttribute('number');
-    var use_ajax = document.getElementById('use_ajax');
     if (confirm('Are you sure?')) {
         if (use_ajax.checked) {
             var data = {};
@@ -235,12 +247,291 @@ function removeRow() {
     }
 }
 
+
+function modal(data, action) {
+    if (!action) {
+        action = 'close';
+    }
+    var modal = bId('modal');
+    var popup = bId('popup');
+    var first_name_field = bId('first_name');
+    var surname_field = bId('surname');
+    var date_of_birth_field = bId('date_of_birth');
+    var salary_field = bId('salary');
+    var id_field = bId('id');
+    switch(action) {
+        case 'show':
+            if (data['id']) {
+                first_name_field.setAttribute('value', data['first_name']);
+                surname_field.setAttribute('value', data['surname']);
+                date_of_birth_field.setAttribute('value', data['date_of_birth']);
+                salary_field.setAttribute('value', data['salary']);
+                id_field.setAttribute('value', data['id']);
+            } else {
+                first_name_field.setAttribute('value', '');
+                surname_field.setAttribute('value', '');
+                date_of_birth_field.setAttribute('value', '');
+                salary_field.setAttribute('value', '');
+            }
+            modal.style.display = 'block';
+            popup.style.display = 'block';
+            return false;
+            break;
+        case 'submit':
+            var use_ajax = document.getElementById('use_ajax');
+            if (validate()) {
+                if (use_ajax.checked) {
+                    data = {};
+                    data['action'] = 'submit';
+                    data['first_name'] = first_name_field.value;
+                    data['surname'] = surname_field.value;
+                    data['date_of_birth'] = date_of_birth_field.value;
+                    data['salary'] = salary_field.value;
+                    data['id'] = id_field.value;
+                    MakeRequest(data, function(callback) {
+                        if (callback.result) {
+                            if (callback.id) {
+                                var selected_row = document.getElementsByClassName('selected');
+                                var tds = selected_row[0].childNodes;
+                                tds[0].innerHTML = callback.first_name;
+                                tds[1].innerHTML = callback.surname;
+                                tds[2].innerHTML = callback.date_of_birth;
+                                tds[3].innerHTML = callback.salary;
+                            } else {
+                                var table = bId('salaryTable');
+                                var tr = document.createElement('TR');
+                                table.appendChild(tr);
+                                var td1 = document.createElement('TD');
+                                td1.innerHTML = callback.first_name;
+                                var td2 = document.createElement('TD');
+                                td2.innerHTML = callback.surname;
+                                var td3 = document.createElement('TD');
+                                td3.innerHTML = callback.date_of_birth;
+                                var td4 = document.createElement('TD');
+                                td4.innerHTML = callback.salary;
+                                tr.appendChild(td1);
+                                tr.appendChild(td2);
+                                tr.appendChild(td3);
+                                tr.appendChild(td4);
+                            }
+                        } else {
+                            alert('Some problems occurred. Please, try again later.');
+                        }
+                    });
+                } else {
+                    var form = document.createElement("form");
+                    form.setAttribute('method',"post");
+                    form.setAttribute('action',"default.php");
+                    form.setAttribute('id',"submit_form");
+
+                    var i1 = document.createElement("input");
+                    i1.setAttribute('type',"text");
+                    i1.setAttribute('name',"action");
+                    i1.setAttribute('value',"submit");
+                    form.appendChild(i1);
+
+                    var i2 = document.createElement("input");
+                    i2.setAttribute('type',"text");
+                    i2.setAttribute('name',"first_name");
+                    i2.setAttribute('value', first_name_field.value);
+                    form.appendChild(i2);
+
+                    var i3 = document.createElement("input");
+                    i3.setAttribute('type',"text");
+                    i3.setAttribute('name',"surname");
+                    i3.setAttribute('value', surname_field.value);
+                    form.appendChild(i3);
+
+                    var i4 = document.createElement("input");
+                    i4.setAttribute('type',"text");
+                    i4.setAttribute('name',"date_of_birth");
+                    i4.setAttribute('value', date_of_birth_field.value);
+                    form.appendChild(i4);
+
+                    var i5 = document.createElement("input");
+                    i5.setAttribute('type',"text");
+                    i5.setAttribute('name',"salary");
+                    i5.setAttribute('value', salary_field.value);
+                    form.appendChild(i5);
+
+                    if (id_field.value) {
+                        var i6 = document.createElement("input");
+                        i6.setAttribute('type',"text");
+                        i6.setAttribute('name',"id");
+                        i6.setAttribute('value', id_field.value);
+                        form.appendChild(i6);
+                    }
+
+                    var submit = document.createElement("input"); //input element, Submit button
+                    submit.setAttribute('type',"submit");
+                    submit.setAttribute('value',"Submit");
+
+                    form.appendChild(submit);
+
+                    document.getElementsByTagName('body')[0].appendChild(form);
+
+                    form.submit();
+                }
+            } else {
+                alert('Please, check input data!');
+                break;
+            }
+        case 'close':
+            modal.style.display = 'none';
+            popup.style.display = 'none';
+            break;
+    }
+    if (data['id']) {
+        var first_name_field = bId('first_name');
+        first_name_field.setAttribute('value', data['first_name']);
+        var surname = bId('first_name');
+        surname.setAttribute('value', data['surname']);
+        var date_of_birth = bId('first_name');
+        date_of_birth.setAttribute('value', data['date_of_birth']);
+        var salary = bId('first_name');
+        salary.setAttribute('value', data['salary']);
+        var id = bId('id');
+        id.setAttribute('value', data['id']);
+    } else {
+
+    }
+}
+
 /*
- * @function addRow
- * add new row
+ * @function bId
+ * getting element by id
  *
  */
-function addRow() {
+function bId(data) {
+    var element = document.getElementById(data);
+    return element;
+}
 
+/*
+ * @function validate
+ * validation input data before server send
+ *
+ */
+function validate() {
+    var first_name_field = bId('first_name');
+    var surname_field = bId('surname');
+    var date_of_birth_field = bId('date_of_birth');
+    var salary_field = bId('salary');
+    if (!first_name_field.value || !surname_field.value || !/^(\d{1,2}).(\d{1,2}).(\d{4})$/.test(date_of_birth_field.value) || !/^\d{1,}$/.test(salary_field.value)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+showEditForm = function(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    data = {};
+    var selected_row = document.getElementsByClassName('selected');
+    var tds = selected_row[0].childNodes;
+    data['id'] = selected_row[0].getAttribute('number');
+    data['first_name'] = tds[0].innerHTML;
+    data['surname'] = tds[1].innerHTML;
+    data['date_of_birth'] = tds[2].innerHTML;
+    data['salary'] = tds[3].innerHTML;
+    modal(data,'show');
+
+}
+
+function sort(field) {
+    if (field) {
+        var use_ajax = document.getElementById('use_ajax');
+        if (use_ajax.checked) {
+            data = {};
+            data['action'] = 'sort';
+            data['field'] = field;
+            MakeRequest(data, function(callback) {
+                buildTable(callback);
+            });
+            getSortInfo();
+        } else {
+            var form = document.createElement("form");
+            form.setAttribute('method',"post");
+            form.setAttribute('action',"default.php");
+            form.setAttribute('id',"sort_form");
+
+            var i1 = document.createElement("input");
+            i1.setAttribute('type',"text");
+            i1.setAttribute('name',"action");
+            i1.setAttribute('value',"sort");
+            form.appendChild(i1);
+
+            var i2 = document.createElement("input");
+            i2.setAttribute('type',"text");
+            i2.setAttribute('name',"field");
+            i2.setAttribute('value', field);
+            form.appendChild(i2);
+
+            var submit = document.createElement("input"); //input element, Submit button
+            submit.setAttribute('type',"submit");
+            submit.setAttribute('value',"Submit");
+
+            form.appendChild(submit);
+
+            document.getElementsByTagName('body')[0].appendChild(form);
+
+            form.submit();
+        }
+    } else {
+        alert('Some problems occurred. Please, try again later.');
+    }
+}
+
+function buildTable(callback) {
+    var table = document.getElementById('salaryTable');
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+    for (i in callback) {
+        var tr = document.createElement('TR');
+        var td1 = document.createElement('TD');
+        var td2 = document.createElement('TD');
+        var td3 = document.createElement('TD');
+        var td4 = document.createElement('TD');
+        if (i == 0) {
+            tr.setAttribute('class', 'selected');
+        }
+        tr.setAttribute('ondblclick', 'showEditForm();');
+        tr.setAttribute('number', callback[i]['id']);
+        td1.innerHTML = callback[i]['first_name'];
+        td2.innerHTML = callback[i]['surname'];
+        td3.innerHTML = callback[i]['date_of_birth'];
+        td4.innerHTML = callback[i]['salary'];
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        table.appendChild(tr);
+        bind('click', tr, selectOnClick);
+    }
+}
+
+function getSortInfo() {
+    data = {};
+    data['action'] = 'show_sort_info';
+    MakeRequest(data, function(callback) {
+        var ths = document.getElementsByTagName('TH');
+        for (i in ths) {
+            for (j in ths[i].attributes) {
+                console.log(ths[i].attributes[j].nodeValue);
+                if (ths[i].attributes[j].nodeValue == callback.field && callback.field && ths[i].attributes[j].nodeType == '2') {
+                 ths[i].setAttribute('current', '1');
+                 ths[i].setAttribute('direction', callback.type);
+                    break;
+                 } else {
+                 ths[i].setAttribute('current', '');
+                 ths[i].setAttribute('direction', '');
+                 }
+            }
+        }
+    });
 }
 
